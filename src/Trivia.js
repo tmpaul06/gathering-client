@@ -16,14 +16,12 @@ export default class Trivia extends React.Component {
     if (this.props.imageUrl) {
       let url = 'url("/static/images/' + this.props.imageUrl + '")';
       document.body.style.backgroundImage = url;
-    } else {
-      document.body.style.background = '#212121';
     }
   }
 
   componentWillUnmount() {
     document.body.classList.remove('body-bg');
-    document.body.style.background = undefined;
+    document.body.style.backgroundImage = null;
   }
   render() {
     return (

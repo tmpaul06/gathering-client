@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import Trivia from './Trivia';
 require('../less/main.less');
+import React, { Component } from 'react';
 import { socket } from './socket';
 import LoginPage from './pages/LoginPage';
 import UserStore from './stores/UserStore';
 import request from 'superagent';
 import LoadingPage from './pages/LoadingPage';
+import Presentation from './Presentation';
 
 export default class App extends Component {
   constructor(props) {
@@ -32,12 +32,7 @@ export default class App extends Component {
       return (<LoginPage onLogin={this.handleLogin}/>);
     }
     return (
-      <Trivia
-        imageUrl={'tim_b_lee.jpg'}
-        question={"Who invented the world wide web ?"}
-        answer={"Tim Berners Lee"}
-        onCorrectAnswer={this.handleCorrectAnswer}
-      />
+      <Presentation/>
     );
   }
 
@@ -66,14 +61,6 @@ export default class App extends Component {
     }, 2000);
   }
 
-  handleCorrectAnswer(timeDiff) {
-    console.log('Emitting results');
-    socket.emit('triviaAnswer', {
-      uid: Math.random(),
-      time: timeDiff
-    });
-  }
-
   handleLogin() {
     request
     .post('/api/login')
@@ -84,13 +71,10 @@ export default class App extends Component {
       if (err) {
         console.error('Error logging in ' + err);
       } else {
+        UserStore.isMaster = res.body.isMaster;
         // Check if the current user is a master client. If so, let the user
         // join master room
-        console.log('Emitting user details');
-        socket.emit('userLogin', {
-          name: UserStore.userName,
-          email: UserStore.userEmail
-        });
+        socket.emit('userLogin', res.body);
         this.setState({
           authentication: 'logged-in'
         });
