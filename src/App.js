@@ -51,6 +51,7 @@ export default class App extends Component {
               this.setState({
                 authentication: 'logged-in'
               });
+              socket.emit('userLogin', body);
             } else {
               this.setState({
                 authentication: 'logged-out'

@@ -1,5 +1,3 @@
-import { socket } from '../socket';
-
 class UserStore {
   constructor() {
     this.userName = undefined;
@@ -8,14 +6,5 @@ class UserStore {
 }
 
 let userStore = new UserStore();
-
-socket.on('connect', () => {
-  console.log(socket);
-  userStore.userId = socket.id;
-});
-
-socket.on('disconnect', () => {
-  userStore.userId = undefined;
-});
 
 export default userStore;

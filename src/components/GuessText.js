@@ -42,7 +42,7 @@ export default class GuessText extends React.Component {
   }
 
   handleKeyDown(e) {
-    let code = e.keyCode;
+    let code = e.keyCode || e.which;
     let char = String.fromCharCode(code);
     let typedChars = this.state.typedChars;
     typedChars[char] = true;
