@@ -33,7 +33,7 @@ export default class Presentation extends React.Component {
           />
         </Slide>
         <Slide>
-          <ClientServerWrapper/>
+          <ClientServerWrapper serverType='stateless'/>
         </Slide>
       </Slides>
     );

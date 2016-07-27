@@ -74,12 +74,38 @@ body {
 
 pre {
   background: #ffffff;
-  color: #212121;
   padding: 15px;
   font-size: 30px;
+  color: #969696;
+  margin: 0px;
+  text-align: justify;
+  white-space: pre-wrap;       /* css-3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+.role-button {
+  border: 2px solid #fff;
+  outline:none;
+  padding: 15px;
+  margin: 20px;
+  color: #fff;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+.paragraph-text {
+  max-width: 70% !important;
+  margin: 20px auto;
+  background: rgba(90, 90, 90, 1);
+  padding: 20px;
+  border: 1px solid rgba(125, 125, 125, 1);
 }
 
 @import './trivia';
 @import './login';
 @import './loading';
 @import './fonts';
+@import './client-server';
