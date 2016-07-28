@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { socket } from './socket';
 import LoginPage from './pages/LoginPage';
 import UserStore from './stores/UserStore';
+import ConnectionStore from './stores/ConnectionStore';
 import request from 'superagent';
 import LoadingPage from './pages/LoadingPage';
 import Presentation from './Presentation';
@@ -44,6 +45,8 @@ export default class App extends Component {
             console.error(err);
           } else {
             let body = response.body;
+            ConnectionStore.clients = body.clients || {};
+            UserStore.masterState = body.masterState;
             if (body.loggedIn) {
               UserStore.userName = body.name;
               UserStore.userEmail = body.email;
@@ -72,6 +75,8 @@ export default class App extends Component {
       if (err) {
         console.error('Error logging in ' + err);
       } else {
+        ConnectionStore.clients = res.body.clients || {};
+        UserStore.masterState = res.body.masterState;
         UserStore.isMaster = res.body.isMaster;
         // Check if the current user is a master client. If so, let the user
         // join master room

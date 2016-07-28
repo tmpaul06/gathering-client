@@ -5,9 +5,10 @@ import { socket } from './socket';
 export default class Slides extends React.Component {
   constructor(props) {
     super(props);
+    let masterState = UserStore.masterState || {};
     this.state = {
-      slideIndex: 0,
-      slideSectionIndex: [ 0 ]
+      slideIndex: masterState.slideIndex || 0,
+      slideSectionIndex: masterState.sectionIndex || [ 0 ]
     };
     this.handlePreviousSection = this.handlePreviousSection.bind(this);
     this.handleNextSection = this.handleNextSection.bind(this);
