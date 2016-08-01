@@ -15,7 +15,6 @@ export default class ReactangleInterface extends React.Component {
       rotation: 0,
       view: 'shape'
     };
-    this.handleInputChange = this.handleInputChange.bind(this);
   }
   //**********************************************************
   // React methods
@@ -73,7 +72,14 @@ export default class ReactangleInterface extends React.Component {
         />
       </svg>);
     } else if (this.state.view === 'json') {
-      return (<pre contentEditable={true} ref="pre" onKeyUp={()=>this.handlePreChange()}>
+      return (<pre contentEditable={true} ref="pre" onKeyUp={() => this.handlePreChange()}
+        onKeyDown={(e) => {
+          let code = e.keyCode || e.which;
+          if (code === 37 || code === 39) {
+            e.preventDefault();
+            return false;
+          }
+        }}>
         {JSON.stringify(this.getPreState(), null, 2)}
       </pre>);
     }

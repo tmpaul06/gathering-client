@@ -20,28 +20,30 @@ export default class Slide extends React.Component {
   }
 
   handleKeyDown(e) {
-    let keyCode = e.keyCode;
-    let childCount = React.Children.count(this.props.children);
-    if (keyCode === 37) {
-      // Left arrow key
-      if (this.props.sectionIndex > 0) {
-        this.props.onPreviousSection();
-      } else {
-        this.props.onPreviousSlide();
-      }
-    } else if (keyCode === 39) {
-      // Right arrow key
-      if (this.props.sectionIndex < (childCount - 1)) {
-        this.props.onNextSection();
-      } else {
-        this.props.onNextSlide();
+    if (!e.defaultPrevented) {
+      let keyCode = e.keyCode;
+      let childCount = React.Children.count(this.props.children);
+      if (keyCode === 37) {
+        // Left arrow key
+        if (this.props.sectionIndex > 0) {
+          this.props.onPreviousSection();
+        } else {
+          this.props.onPreviousSlide();
+        }
+      } else if (keyCode === 39) {
+        // Right arrow key
+        if (this.props.sectionIndex < (childCount - 1)) {
+          this.props.onNextSection();
+        } else {
+          this.props.onNextSlide();
+        }
       }
     }
   }
 
   render() {
     return (
-      <div className="slide">
+      <div className={'slide ' + (this.props.className || '')}>
         {React.Children.map(this.props.children, (child, i) => {
           // Each child is a Section component
           if (i <= this.props.sectionIndex) {

@@ -18,11 +18,9 @@ export default class AssignRoles extends React.Component {
             for each role
           */
         }
-        <div>Total connections: {connections.length}</div>
+        <div className='connection-count'>{connections.length}</div>
         {roles.map((role, i) => {
-          return (<button key={role.label} style={{
-            background: role.color
-          }} className='role-button' onClick={() => this.assignRole(role)}>
+          return (<button key={role.label} className={'role-button ' + role.class} onClick={() => this.assignRole(role)}>
             {role.label + ' (' + role.assignedConnections.length + ')'}
           </button>);
         })}

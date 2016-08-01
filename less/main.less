@@ -1,3 +1,5 @@
+@import (inline) '../node_modules/react-input-range/dist/react-input-range.css';
+
 html, body {
   height: 100%;
 }
@@ -25,9 +27,37 @@ body {
   height: inherit;
 }
 
+#root:after {
+  width: 0;
+  height: 0;
+  border-left: 200px solid transparent;
+  border-right: 200px solid transparent;
+  border-top: 200px solid rgba(66, 76, 82, 0.9);
+  position: absolute;
+  content: "";
+  z-index: 0;
+  top: 0px;
+  left: -150px;
+}
+
+#root:before {
+  width: 0;
+  height: 0;
+  border-left: 200px solid transparent;
+  border-right: 200px solid transparent;
+  border-top: 200px solid rgba(80, 81, 82, 0.9);
+  position: absolute;
+  content: "";
+  top: 0px;
+  z-index: 0;
+  left: -120px;
+}
+
 .slides, .slide {
   width: inherit;
   height: inherit;
+  position: relative;
+  z-index: 1;
 }
 
 .slide > :first-child {
@@ -39,31 +69,48 @@ body {
   text-align: center;
 
   h1 {
-    font-size: 140px;
-  }
-
-  h2 {
     font-size: 120px;
   }
 
+  h2 {
+    font-size: 100px;
+  }
+
   h3 {
-    font-size: 80px;
+    font-size: 70px;
     margin: 20px;
   }
 
   h4 {
-    font-size: 60px;
+    font-size: 50px;
     margin: 20px;
   }
 
   h5 {
-    font-size: 40px;
+    font-size: 35px;
     margin: 20px;
   }
 
   p {
-    font-size: 35px;
+    font-size: 30px;
   }
+
+  h1, h2, h3, h4, h5 {
+    color: #00e1c6;
+  }
+
+  p {
+    color: #19bbd5;
+  }
+}
+
+a:visited {
+  color: #CC0D91;
+}
+
+.slide-container {
+  max-width: 60%;
+  margin: 0px auto;
 }
 
 .body-bg {
@@ -106,6 +153,125 @@ pre {
 
 svg {
   background: gray;
+}
+
+.input-radio-group {
+  margin: 10px;
+}
+
+input[type="radio"] {
+    background-color: #ddd;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-block;
+    height: 20px;
+    margin-right: 15px;
+    position: relative;
+    width: 20px;
+    outline: none;
+    -webkit-appearance: none;
+}
+input[type="radio"]:after {
+    background-color: #ececec;
+    border-radius: 50%;
+    content: '';
+    display: block;
+    height: 10px;
+    left: 5px;
+    position: relative;
+    top: 5px;
+    width: 10px;
+}
+
+input[type="radio"] + label {
+  cursor: pointer;
+  vertical-align: top;
+}
+
+input[type="radio"]:checked {
+  background-color: #7B7B7B;
+}
+
+input[type="radio"]:checked:after {
+    background-color: #51F7A3;
+}
+
+.bg-primary {
+  background: #2c9dde;
+}
+
+.bg-secondary {
+  background: #00e1c6;
+}
+
+.bg-tertiary {
+  background: #19bbd5;
+}
+
+.connection-count {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  padding: 5px 6px;
+  background: #5A5A5A;
+  font-family: roboto-bold;
+  border: 2px solid #fff;
+}
+
+canvas {
+  width: 100%;
+  height: inherit;
+  position: absolute;
+  z-index: -1;
+}
+
+blockquote {
+  border-left: 5px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 1.5em 20px;
+  quotes: "\201C""\201D""\2018""\2019";
+  text-align: justify;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 20px !important;
+
+  .author {
+    float: right;
+    color: #fafafa;
+    font-style: italic;
+  }
+
+  .author:before {
+    content: "-";
+    margin: 5px;
+  }
+}
+
+blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+
+.vertical-list {
+  text-align: left;
+  margin: 20px;
+  padding: 0px;
+  list-style: none;
+
+  li.vertical-list-item {
+    margin: 30px 0px;
+    font-size: 30px;
+  }
+
+  li.vertical-list-item:before {
+    content:"·";
+    font-size:120px;
+    vertical-align:middle;
+    line-height:20px;
+  }
 }
 
 @import './trivia';

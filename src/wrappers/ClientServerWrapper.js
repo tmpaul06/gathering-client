@@ -1,8 +1,8 @@
 import React from 'react';
-import UserStore from '../stores/UserStore';
-import ConnectionStore from '../stores/ConnectionStore';
-import AssignRoles from '../components/AssignRoles';
+import RoleWrapper from './RoleWrapper';
 import { socket } from '../socket';
+import ConnectionStore from '../stores/ConnectionStore';
+import UserStore from '../stores/UserStore';
 import ParagraphText from '../components/ParagraphText';
 import text from '../data/paragraph';
 /**
@@ -19,49 +19,19 @@ import text from '../data/paragraph';
  * a round-robin dispatch is used between each server connection.
  * 
  */
-export default class ClientServerWrapper extends React.Component {
+class ClientServerWrapper extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       paragraphOffset: 0,
-      view: undefined,
-      messages: {},
-      roles: [ {
-        label: 'Client',
-        color: 'rgb(204, 97, 97)',
-        count: 1,
-        assignedConnections: []
-      }, {
-        label: 'Server',
-        color: 'rgb(117, 181, 96)',
-        count: 2,
-        assignedConnections: []
-      } ]
+      messages: {}
     };
-    this.handleAddConnectionToRole = this.handleAddConnectionToRole.bind(this);
     this.makeClientRequest = this.makeClientRequest.bind(this);
-    this.updateConnections = this.updateConnections.bind(this);
   }
 
   componentDidMount() {
-    ConnectionStore.addChangeListener(this.updateConnections);
-    socket.on('clientAssignment', () => {
-      // Set view state as client
-      this.setState({
-        view: 'client'
-      });
-    });
-
-    socket.on('serverAssignment', () => {
-      // Set view state as server
-      this.setState({
-        view: 'server'
-      });
-    });
-
     socket.on('serverMessage', (d) => {
-      console.log('Server message', d, this.state.view);
-      if (this.state.view === 'client') {
+      if (this.props.view === 'client') {
         return this.setState({
           responseFromServer: {
             text: d.text
@@ -78,14 +48,13 @@ export default class ClientServerWrapper extends React.Component {
     });
 
     socket.on('clientMessage', (d) => {
-      console.log('Client message', d, this.state.view);
-      if (this.state.view === 'server') {
+      if (this.props.view === 'server') {
         // If current user is a server, then set requestFromClient field
         // on state
         return this.setState({
           requestFromClient: d
         });
-      } else if (this.state.view === 'client') {
+      } else if (this.props.view === 'client') {
         // If current user is a client, then set responseFromServer field
         // on state
         return this.setState({
@@ -102,30 +71,13 @@ export default class ClientServerWrapper extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-    ConnectionStore.removeChangeListener(this.updateConnections);
-  }
-
-  updateConnections() {
-    let connections = Object.keys(ConnectionStore.clients).map((k) => ConnectionStore.clients[k]);
-    this.state.roles.forEach((role) => {
-      let activeConns = [];
-      role.assignedConnections.forEach((c, i) => {
-        if (ConnectionStore.clients[c.user.email] !== undefined) {
-          activeConns.push(c);
-        }
-      });
-      role.assignedConnections = activeConns;
-    });
-    this.forceUpdate();
-  }
-
   getRegularView() {
     let connections = Object.keys(ConnectionStore.clients).map((k) => ConnectionStore.clients[k]);
     // Run over the roles and assigned connections and populate the state
     // of each of them from the message field on component state
     let clientServerComponents = [];
-    this.state.roles.forEach((role) => {
+    let roles = this.props.roles || [];
+    roles.forEach((role) => {
       role.assignedConnections.forEach((c) => {
         clientServerComponents.push({
           type: role.label,
@@ -137,15 +89,10 @@ export default class ClientServerWrapper extends React.Component {
     });
     return (
       <div>
-        {UserStore.isMaster && (<AssignRoles
-          roles={this.state.roles}
-          connections={connections}
-          addConnectionToRole={this.handleAddConnectionToRole}
-        />)}
         <div className='cell-container'>
           {clientServerComponents.map((c) => {
             return (
-              <div key={c.id} className={'cell' + ' ' + c.type.toLowerCase()}>
+              <div key={c.id} className={'cell' + ' ' + c.class.toLowerCase()}>
                 <span className='title'>{c.name}</span>
                 <pre>
                   {JSON.stringify(c.state, null, 2)}
@@ -181,7 +128,7 @@ export default class ClientServerWrapper extends React.Component {
     return (
       <div>
         <div className='cell-container'>
-          <div className='cell server'>
+          <div className='cell bg-tertiary'>
             <span className='title'>REQUEST BODY</span>
             <pre>
               {JSON.stringify(this.state.requestFromClient, null, 2)}
@@ -210,7 +157,7 @@ export default class ClientServerWrapper extends React.Component {
     return (
       <div>
         <div className='cell-container'>
-          <div className='cell client'>
+          <div className='cell bg-primary'>
             <span className='title'>RESPONSE FROM SERVER</span>
             <pre>
               {JSON.stringify(this.state.responseFromServer ? this.state.responseFromServer.text.slice(0, 40) + '...' : undefined,
@@ -224,9 +171,10 @@ export default class ClientServerWrapper extends React.Component {
   }
 
   getView() {
-    if (this.state.view === 'client') {
+    let view = this.props.view;
+    if (view === 'client') {
       return this.getClientView();
-    } else if (this.state.view === 'server') {
+    } else if (view === 'server') {
       return this.getServerView();
     } else {
       return this.getRegularView();
@@ -252,27 +200,7 @@ export default class ClientServerWrapper extends React.Component {
     </div>);
   }
 
-  handleAddConnectionToRole(role, connection) {
-    let roles = this.state.roles;
-    roles.forEach(function(r) {
-      if (r.label === role.label) {
-        // Emit messages accordingly
-        if (UserStore.isMaster) {
-          socket.emit('assign' + r.label, {
-            id: connection.clientId
-          });
-        }
-        r.assignedConnections = r.assignedConnections || [];
-        r.assignedConnections.push(connection);
-      }
-    });
-    this.setState({
-      roles
-    });
-  }
-
   handleServerResponse() {
-    console.log('Sending response');
     let serverType = this.props.serverType;
     // If stateless, use the request from client to send the corresponding
     // paragraph
@@ -296,3 +224,15 @@ export default class ClientServerWrapper extends React.Component {
     });
   }
 }
+
+export default RoleWrapper(ClientServerWrapper, [ {
+  label: 'Client',
+  count: 1,
+  class: 'bg-tertiary',
+  assignedConnections: []
+}, {
+  label: 'Server',
+  count: 2,
+  class: 'bg-primary',
+  assignedConnections: []
+} ]);
