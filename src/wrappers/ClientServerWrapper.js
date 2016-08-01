@@ -107,6 +107,16 @@ export default class ClientServerWrapper extends React.Component {
   }
 
   updateConnections() {
+    let connections = Object.keys(ConnectionStore.clients).map((k) => ConnectionStore.clients[k]);
+    this.state.roles.forEach((role) => {
+      let activeConns = [];
+      role.assignedConnections.forEach((c, i) => {
+        if (ConnectionStore.clients[c.user.email] !== undefined) {
+          activeConns.push(c);
+        }
+      });
+      role.assignedConnections = activeConns;
+    });
     this.forceUpdate();
   }
 

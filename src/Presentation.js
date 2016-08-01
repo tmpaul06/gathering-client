@@ -4,6 +4,8 @@ import Slide from './Slide';
 import Slides from './Slides';
 import TriviaWrapper from './wrappers//TriviaWrapper';
 import ClientServerWrapper from './wrappers/ClientServerWrapper';
+import RectangleInterfaceWrapper from './wrappers/RectangleInterfaceWrapper';
+import RectangleInterface from './components/RectangleInterface';
 
 export default class Presentation extends React.Component {
   render() {
@@ -34,6 +36,12 @@ export default class Presentation extends React.Component {
         </Slide>
         <Slide>
           <ClientServerWrapper serverType='stateless'/>
+        </Slide>
+        <Slide>
+          <RectangleInterface/>
+        </Slide>
+        <Slide>
+          <RectangleInterfaceWrapper/>
         </Slide>
       </Slides>
     );
