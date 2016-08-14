@@ -11,18 +11,6 @@ export default class Trivia extends React.Component {
   //**********************************************
   // React methods
   //**********************************************
-  componentWillMount() {
-    document.body.classList.add('body-bg');
-    if (this.props.imageUrl) {
-      let url = 'url("/static/images/' + this.props.imageUrl + '")';
-      document.body.style.backgroundImage = url;
-    }
-  }
-
-  componentWillUnmount() {
-    document.body.classList.remove('body-bg');
-    document.body.style.backgroundImage = null;
-  }
   render() {
     return (
       <div className="trivia-container">

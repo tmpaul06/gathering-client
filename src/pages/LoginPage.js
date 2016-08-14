@@ -12,15 +12,25 @@ export default class LoginPage extends React.Component {
   render() {
     return (
       <div className='login-container'>
-        <form>
-          <p>Username</p>
-          <input className='field' type='text' placeholder={'Enter name...'} value={UserStore.userName} onChange={this.setUserName}/>
-          <p>Email</p>
-          <input className='field' type='text' placeholder={'____@nineleaps.com'} value={UserStore.userEmail} onChange={this.setUserEmail}/>
-          <div>
-            <input className='submit-button' type='submit' value={'Go'} onClick={this.login}/>
+        <div className='screen monitor'>
+          <div className='content'>
+            <form>
+              <p>Username</p>
+              <input className='field' type='text' placeholder={'Enter name...'} value={UserStore.userName} onChange={this.setUserName}/>
+              <p>Email</p>
+              <input className='field' type='text' placeholder={'____@nineleaps.com'} value={UserStore.userEmail} onChange={this.setUserEmail}/>
+              <div>
+                <input className='submit-button' type='submit' value={'Go'} onClick={this.login}/>
+              </div>
+            </form>
           </div>
-        </form>
+          <div className='base'>
+            <div className='grey-shadow'></div>
+            <div className='foot top'></div>
+            <div className='foot bottom'></div>
+            <div className='shadow'></div>
+          </div>
+        </div>
       </div>
     );
   }

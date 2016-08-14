@@ -14,17 +14,24 @@ class Star {
     let sign = Math.random() > 0.5 ? 1 : -1;
     this.x = Math.floor(Math.random() * width);
     this.y = Math.floor(Math.random() * height);
-    this.vx = Math.random() / 20 * sign;
-    this.vy = Math.random() / 20 * sign;
+    this.vx = Math.random() / 15 * sign;
+    this.vy = Math.random() / 15 * sign;
     this.color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
-    this.radius = Math.floor(Math.random() * 10) + 2;
+    this.radius = Math.floor(Math.random() * 20) + 5;
   }
 
-  draw(ctx) {
+  draw(ctx, nextStar) {
     ctx.beginPath();
-    ctx.fillStyle = this.color;
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+    ctx.strokeStyle = '#a5a5a5';
+    ctx.moveTo(this.x, this.y);
+    ctx.lineTo(nextStar.x, this.y);
+    ctx.lineTo(nextStar.x, nextStar.y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.fillStyle = '#ffffff';
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
     ctx.fill();
+    ctx.stroke();
   }
 }
 
@@ -33,7 +40,7 @@ export default class Background extends React.Component {
     let canvas = this.refs.canvas;
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
-    this.createStars(canvas, 70);
+    this.createStars(canvas, 20);
     this.updateStars(canvas, canvas.width, canvas.height);
   }
   render() {
@@ -41,7 +48,7 @@ export default class Background extends React.Component {
   }
   createStars(canvas, N) {
     let ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'rgba(255, 255, 255, .5)';
+    ctx.fillStyle = 'rgb(255, 255, 255)';
     let width = canvas.width, height = canvas.height;
     this.stars = [];
     for(let i = 0; i < N; i++) {
@@ -52,7 +59,7 @@ export default class Background extends React.Component {
   updateStars(canvas, w, h) {
     let ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, w, h);
-    ctx.globalAlpha = 0.7;
+    ctx.globalAlpha = 0.75;
     let stars = this.stars || [];
     let len = stars.length;
     // For each star, compute new position based on velocity
@@ -60,7 +67,10 @@ export default class Background extends React.Component {
       let star = stars[i];
       star.x += star.vx;
       star.y += star.vy;
-      star.draw(ctx);
+      star.draw(ctx, stars[i + 1] ? stars[i + 1] : {
+        x: 0,
+        y: 0
+      });
       if (star.x > w) {
         star.x = 0;
         //star.vx = -star.vx;

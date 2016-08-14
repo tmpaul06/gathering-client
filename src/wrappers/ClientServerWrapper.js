@@ -92,7 +92,7 @@ class ClientServerWrapper extends React.Component {
         <div className='cell-container'>
           {clientServerComponents.map((c) => {
             return (
-              <div key={c.id} className={'cell' + ' ' + c.class.toLowerCase()}>
+              <div key={c.id} className={'cell'}>
                 <span className='title'>{c.name}</span>
                 <pre>
                   {JSON.stringify(c.state, null, 2)}
@@ -225,14 +225,4 @@ class ClientServerWrapper extends React.Component {
   }
 }
 
-export default RoleWrapper(ClientServerWrapper, [ {
-  label: 'Client',
-  count: 1,
-  class: 'bg-tertiary',
-  assignedConnections: []
-}, {
-  label: 'Server',
-  count: 2,
-  class: 'bg-primary',
-  assignedConnections: []
-} ]);
+export default RoleWrapper(ClientServerWrapper);

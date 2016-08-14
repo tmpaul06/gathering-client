@@ -96,6 +96,7 @@ export default (Component) => {
         // Callback only if diff has changed.
         if((this.state.x !== (e.clientX - this.state.dragOriginX)) || (this.state.y !== (e.clientY - this.state.dragOriginY))) {
           this.props.onDrag({
+            e,
             x: this.state.x,
             y: this.state.y,
             dx: (restrictX) ? 0 : ((e.clientX - this.state.dragOriginX) - this.state.x),

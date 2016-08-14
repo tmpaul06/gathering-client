@@ -9,7 +9,7 @@ export default function RoleWrapper(Component, roles) {
     constructor(props) {
       super(props);
       this.state = {
-        roles,
+        roles: props.roles || [],
         view: undefined
       };
       this.handleAddConnectionToRole = this.handleAddConnectionToRole.bind(this);

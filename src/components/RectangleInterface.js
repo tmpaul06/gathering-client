@@ -1,7 +1,16 @@
 import React from 'react';
-import RectangleControls from './RectangleManipulationControls';
+import Draggable from '../utils/Draggable';
 
-export default class ReactangleInterface extends React.Component {
+let DraggableRect = Draggable('rect');
+
+export default class RectangleInterface extends React.Component {
+  //**********************************************************
+  // Static fields
+  //**********************************************************
+  static SVG_DIM = {
+    WIDTH: 600,
+    HEIGHT: 400
+  };
   //**********************************************************
   // Constructor
   //**********************************************************
@@ -12,9 +21,9 @@ export default class ReactangleInterface extends React.Component {
       y: 200,
       width: 200,
       height: 100,
-      rotation: 0,
-      view: 'shape'
+      rotation: 0
     };
+    this.handleRectDrag = this.handleRectDrag.bind(this);
   }
   //**********************************************************
   // React methods
@@ -22,18 +31,16 @@ export default class ReactangleInterface extends React.Component {
   render() {
     return (
       <div className='cell-container'>
-        <button 
-          className='role-button'
-          onClick={() => this.setViewType('shape')}>
-          SHAPE
-        </button>
-        <button 
-          className='role-button'
-          onClick={() => this.setViewType('json')}>
-          JSON
-        </button>
+        <div className='row'>
+          <div className='eight columns'>
+            <p>Resource</p>
+          </div>
+          <div className='four columns'>
+            <p>Representation</p>
+          </div>
+        </div>
         {this.getView()}
-        <RectangleControls/>
+        <p>Drag to move. Shift + Drag to rotate</p>
       </div>
     );
   }
@@ -60,28 +67,76 @@ export default class ReactangleInterface extends React.Component {
   getView() {
     let rect = this.state;
     let styles = this.getStyles();
-    if (this.state.view === 'shape') {
-      return (<svg height={400} width={600}>
-        <rect
-          transform={this.getTransform()}
-          x={rect.x}
-          y={rect.y}
-          width={rect.width}
-          height={rect.height}
-          style={styles.rect}
-        />
-      </svg>);
-    } else if (this.state.view === 'json') {
-      return (<pre contentEditable={true} ref="pre" onKeyUp={() => this.handlePreChange()}
-        onKeyDown={(e) => {
-          let code = e.keyCode || e.which;
-          if (code === 37 || code === 39) {
-            e.preventDefault();
-            return false;
-          }
-        }}>
-        {JSON.stringify(this.getPreState(), null, 2)}
-      </pre>);
+    return (<div className='row'>
+      <div className='eight columns'>
+        <svg height={RectangleInterface.SVG_DIM.HEIGHT} width={RectangleInterface.SVG_DIM.WIDTH}>
+          <DraggableRect
+            transform={this.getTransform()}
+            x={rect.x}
+            y={rect.y}
+            width={rect.width}
+            height={rect.height}
+            style={styles.rect}
+            onDrag={this.handleRectDrag}
+          />
+        </svg>
+      </div>
+      <div className='four columns'>
+        <pre style={{
+          height: 372,
+          color: '#fff',
+          width: 'inherit',
+          display: 'table-cell',
+          verticalAlign: 'middle',
+          outline: 'none',
+          background: '#585858'
+        }} contentEditable={true} ref="pre" onKeyUp={() => this.handlePreChange()}
+          onKeyDown={(e) => {
+            let code = e.keyCode || e.which;
+            if (code === 37 || code === 39) {
+              e.preventDefault();
+              return false;
+            }
+          }}>
+          {JSON.stringify(this.getPreState(), null, 2)}
+        </pre>
+      </div>
+    </div>);
+  }
+
+  handleRectDrag(obj) {
+    let event = obj.e;
+    if (event.shiftKey) {
+      // Rotate
+      let rotation = this.state.rotation;
+      rotation += obj.dx;
+      return this.setState({
+        rotation
+      });
+    } else {
+      let { x, y } = this.state;
+      let minX = 0;
+      let minY = 0;
+      let maxX = RectangleInterface.SVG_DIM.WIDTH - this.state.width;
+      let maxY = RectangleInterface.SVG_DIM.HEIGHT - this.state.height;
+      x = x + obj.dx;
+      y = y + obj.dy;
+      if (x > maxX) {
+        x = maxX;
+      }
+      if (x < minX) {
+        x = minX;
+      }
+      if (y > maxY) {
+        y = maxY;
+      }
+      if (y < minY) {
+        y = minY;
+      }
+      this.setState({
+        x,
+        y
+      });
     }
   }
 
@@ -96,12 +151,6 @@ export default class ReactangleInterface extends React.Component {
       obj[k] = this.state[k];
     });
     return obj;
-  }
-
-  setViewType(viewType) {
-    this.setState({
-      view: viewType
-    });
   }
 
   handlePreChange() {

@@ -198,14 +198,4 @@ export default class RectangleRemoteManipulationWrapper extends React.Component 
   }
 };
 
-export default RoleWrapper(RectangleRemoteManipulationWrapper, [ {
-  label: 'MOVE',
-  color: 'rgb(204, 97, 97)',
-  count: 3,
-  assignedConnections: []
-}, {
-  label: 'ROTATE',
-  color: 'rgb(117, 181, 96)',
-  count: 2,
-  assignedConnections: []
-} ]);
+export default RoleWrapper(RectangleRemoteManipulationWrapper);

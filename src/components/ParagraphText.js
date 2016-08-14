@@ -10,7 +10,8 @@ export default class ParagraphText extends React.Component {
             <div key={i}>
               <p key={i} style={{
                 fontSize: 14,
-                textAlign: 'justify'
+                textAlign: 'justify',
+                color: '#fff'
               }}>{para}</p>
             </div>
           );

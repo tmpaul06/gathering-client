@@ -1,6 +1,7 @@
 import React from 'react';
 import UserStore from './stores/UserStore';
 import { socket } from './socket';
+import Background from './Background';
 
 export default class Slides extends React.Component {
   constructor(props) {
@@ -30,6 +31,7 @@ export default class Slides extends React.Component {
   render() {
     return (
       <div className="slides">
+        <Background/>
         {React.Children.map(this.props.children, (child, i) => {
           if (this.state.slideIndex === i) {
             return React.cloneElement(child, {

@@ -1,4 +1,5 @@
 @import (inline) '../node_modules/react-input-range/dist/react-input-range.css';
+@import (inline) './grid.css';
 
 html, body {
   height: 100%;
@@ -9,8 +10,8 @@ body {
   font-family: roboto-regular;
   margin:0;
   color: #ffffff;
-  background: #232526; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to left, #232526 , #414345); /* Chrome 10-25, Safari 5.1-6 */
+  background: #efefef; /* fallback for old browsers
+  /*background: -webkit-linear-gradient(to left, #232526 , #414345);
   background: linear-gradient(to left, #232526 , #414345); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   /*background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top, rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg, #670d10 0%, #092756 100%);
   background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top, rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -webkit-linear-gradient(-45deg, #670d10 0%,#092756 100%);
@@ -27,7 +28,7 @@ body {
   height: inherit;
 }
 
-#root:after {
+/*#root:after {
   width: 0;
   height: 0;
   border-left: 200px solid transparent;
@@ -51,6 +52,11 @@ body {
   top: 0px;
   z-index: 0;
   left: -120px;
+}*/
+
+.ppt-title {
+  font-size: 200px !important;
+  color: #3B8CDE !important; 
 }
 
 .slides, .slide {
@@ -67,6 +73,7 @@ body {
 
 .slide {
   text-align: center;
+  background: rgba(234, 234, 234, 0.6);
 
   h1 {
     font-size: 120px;
@@ -96,12 +103,21 @@ body {
   }
 
   h1, h2, h3, h4, h5 {
-    color: #00e1c6;
+    /*color: #00e1c6;*/
+    color: #3D3536;
   }
 
   p {
-    color: #19bbd5;
+    /*color: #19bbd5;*/
+    color: #514A4B;
   }
+}
+
+.clearfix:after { 
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
 }
 
 a:visited {
@@ -111,6 +127,7 @@ a:visited {
 .slide-container {
   max-width: 60%;
   margin: 0px auto;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
 }
 
 .body-bg {
@@ -152,7 +169,8 @@ pre {
 }
 
 svg {
-  background: gray;
+  background: rgba(128, 128, 128, 0.18);
+  border: 1px solid #4E4E4E;
 }
 
 .input-radio-group {
@@ -197,7 +215,8 @@ input[type="radio"]:checked:after {
 }
 
 .bg-primary {
-  background: #2c9dde;
+  /*background: #2c9dde;*/
+  background: #3D3536;
 }
 
 .bg-secondary {
@@ -226,12 +245,12 @@ canvas {
 }
 
 blockquote {
-  border-left: 5px solid #ccc;
+  background: #3D3536;
+  border-left: 5px solid #9FD24F;
   margin: 1.5em 10px;
   padding: 1.5em 20px;
   quotes: "\201C""\201D""\2018""\2019";
   text-align: justify;
-  background: rgba(255, 255, 255, 0.12);
   font-size: 20px !important;
 
   .author {
@@ -274,9 +293,26 @@ blockquote:before {
   }
 }
 
+::-webkit-input-placeholder {
+   color: #fff;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #fff;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #fff; 
+}
+
+:-ms-input-placeholder {  
+   color: #fff; 
+}
+
 @import './trivia';
 @import './login';
 @import './loading';
 @import './fonts';
 @import './client-server';
 @import './rectangle';
+@import './chat';
