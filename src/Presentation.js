@@ -61,11 +61,46 @@ export default class Presentation extends React.Component {
             <p>Encapsulate legacy systems</p>
           </Slide>
           <Slide>
+            <h3>Time travel</h3>
+            <h5>The Internet</h5>
+            <h5 style={{ color: 'orange' }}>World Wide Web</h5>
+            <h5 className='ppt-title'>1960 - 2016</h5>
+          </Slide>
+          <Slide className='slide-container'>
+            <TriviaWrapper
+              question='What is the internet`s precursor known as ?'
+              answer='ARPANET'
+            />
+          </Slide>
+          <Slide>
+            <h3>History of the Internet</h3>
+            <p>ARPANET - developed during 60s - 70s, backed by Packet Switching</p>
+            <p>ARPANET, academic and military networks in the 1980s</p>
+            <p>Internetworking - TCP/IP</p>
+            <h4>Internet</h4>
+            <p>Global system of interconnected computer networks</p>
+            <p>Uses Internet protocol suite (TCP/IP)</p>
+          </Slide>
+          <Slide className='slide-container'>
             <TriviaWrapper
               imageUrl='tim_b_lee.jpg'
               question='Who invented the World Wide Web ?'
               answer='Tim Berners Lee'
             />
+          </Slide>
+          <Slide className='slide-container'>
+            <h4>Onto World Wide Web</h4>
+            <blockquote>
+              <span className='text'>
+                “In those days, there was different information on different computers, but you had to log on to different computers to get at it. Also, sometimes you had to learn a different program on each computer. Often it was just easier to go and ask people when they were having coffee…”
+              </span>
+              <span className='author'>
+                Tim Berners Lee
+              </span>
+            </blockquote>
+            <p>HTML: HyperText Markup Language. The markup (formatting) language for the Web.</p>
+            <p>URI: Uniform Resource Identifier - Address of a resource</p>
+            <p>HTTP: Hypertext Transfer Protocol.</p>
           </Slide>
           <Slide className='slide-container'>
             <h4>A brief history of the Web</h4>
@@ -101,6 +136,12 @@ export default class Presentation extends React.Component {
             <p>Stateless communication</p>
             <p>Uniform Interface</p>
             <p>Caching</p>
+          </Slide>
+          <Slide className='slide-container'>
+            <TriviaWrapper
+              question='Who is the author of the REST architecture ?'
+              answer='Roy Fielding'
+            />
           </Slide>
           <Slide>
             <h3>Client-Server</h3>
@@ -170,9 +211,12 @@ export default class Presentation extends React.Component {
             </p>
             <h5>Resource Identifier</h5>
           </Slide>
-          <Slide className='slide-container'>
+          <Slide>
             <h4>1. Identification of resources</h4>
-            <h5>Representations</h5>
+            <h5>URI - Uniform Resource Identifier</h5>
+          </Slide>
+          <Slide className='slide-container'>
+            <h4>Representations</h4>
             <blockquote>
               <span className='text'>
                 A representation is a sequence of bytes, plus representation metadata to 
@@ -186,20 +230,33 @@ export default class Presentation extends React.Component {
             <p>Metadata is in the form of name-value pairs, where the name corresponds to a standard
 that defines the value’s structure and semantics</p>
           </Slide>
+          <Slide>
+            <RectangleInterface/>
+          </Slide>
           <Slide className='slide-container'>
             <h4>2. Manipulation of resources</h4>
             <h5>Direct Manipulation</h5>
             <p>Full control over implementation</p>
             <p>Done locally</p>
-            <h5>Manipulation through representation</h5>
-            <p>Can choose any convenient representation dynamically</p>
-            <p>Can be done remotely</p>
-          </Slide>
-          <Slide>
-            <RectangleInterface/>
+            <div style={{ opacity: 0.3 }}>
+              <h5>Manipulation through representation</h5>
+              <p>Can choose any convenient representation dynamically</p>
+              <p>Can be done remotely</p>
+            </div>
           </Slide>
           <Slide>
             <RectangleRemoteManipulationWrapper roles={mrRoles}/>
+          </Slide>
+          <Slide className='slide-container'>
+            <h4>2. Manipulation of resources</h4>
+            <div style={{ opacity: 0.3 }}>
+              <h5>Direct Manipulation</h5>
+              <p>Full control over implementation</p>
+              <p>Done locally</p>
+            </div>
+            <h5>Manipulation through representation</h5>
+            <p>Can choose any convenient representation dynamically</p>
+            <p>Can be done remotely</p>
           </Slide>
           <Slide className='slide-container'>
             <h4>2. Manipulation of resources</h4>

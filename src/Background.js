@@ -43,9 +43,11 @@ export default class Background extends React.Component {
     this.createStars(canvas, 20);
     this.updateStars(canvas, canvas.width, canvas.height);
   }
+
   render() {
     return (<canvas width="640" height="260" ref='canvas'/>);
   }
+
   createStars(canvas, N) {
     let ctx = canvas.getContext('2d');
     ctx.fillStyle = 'rgb(255, 255, 255)';
@@ -56,10 +58,11 @@ export default class Background extends React.Component {
       this.stars.push(star);
     }
   }
+
   updateStars(canvas, w, h) {
     let ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, w, h);
-    ctx.globalAlpha = 0.75;
+    ctx.globalAlpha = 0.5;
     let stars = this.stars || [];
     let len = stars.length;
     // For each star, compute new position based on velocity
@@ -86,8 +89,8 @@ export default class Background extends React.Component {
         star.vy = -star.vy;
       }
     }
-    setTimeout(() => {
-      this.updateStars(canvas, w, h);
-    }, 1000 / 60);
+    // setTimeout(() => {
+    //   this.updateStars(canvas, w, h);
+    // }, 1000 / 60);
   }
 };

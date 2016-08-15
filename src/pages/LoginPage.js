@@ -9,6 +9,14 @@ export default class LoginPage extends React.Component {
     this.login = this.login.bind(this);
   }
 
+  componentWillMount() {
+    document.body.style.backgroundColor = '#74E674';
+  }
+
+  componentWillUnmount() {
+    document.body.style.backgroundColor = null;
+  }
+
   render() {
     return (
       <div className='login-container'>
@@ -20,7 +28,7 @@ export default class LoginPage extends React.Component {
               <p>Email</p>
               <input className='field' type='text' placeholder={'____@nineleaps.com'} value={UserStore.userEmail} onChange={this.setUserEmail}/>
               <div>
-                <input className='submit-button' type='submit' value={'Go'} onClick={this.login}/>
+                <input className='submit-button' type='submit' value={'Enter'} onClick={this.login}/>
               </div>
             </form>
           </div>
@@ -36,20 +44,26 @@ export default class LoginPage extends React.Component {
   }
 
   setUserName(e) {
-    UserStore.userName = e.target.value;
-    this.forceUpdate();
+    if (e.target.value) {
+      UserStore.userName = e.target.value;
+      this.forceUpdate();
+    }
   }
 
   setUserEmail(e) {
-    UserStore.userEmail = e.target.value;
-    this.forceUpdate();
+    if (e.target.value) {
+      UserStore.userEmail = e.target.value;
+      this.forceUpdate();
+    }
   }
 
   login(e) {
     e.preventDefault();
-    // Proceed to next page.
-    if (this.props.onLogin) {
-      this.props.onLogin();
+    if (UserStore.userName && UserStore.userEmail) {
+      // Proceed to next page.
+      if (this.props.onLogin) {
+        this.props.onLogin();
+      }
     }
     return false;
   }
