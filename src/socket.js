@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import connectionStore from './stores/ConnectionStore';
-export const socket = io();
+export const socket = io(serverAddr);
 
 socket.on('connect', function () {
   socket.on('slaveLogin', (data) => {

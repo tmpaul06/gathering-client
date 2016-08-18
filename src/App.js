@@ -43,6 +43,9 @@ export default class App extends Component {
         .end((err, response) => {
           if (err) {
             console.error(err);
+            this.setState({
+              authentication: 'logged-out'
+            });
           } else {
             let body = response.body;
             ConnectionStore.clients = body.clients || {};

@@ -39,6 +39,19 @@ export default class BotChatWrapper extends React.Component {
       time: Date.now(),
       text: message
     });
+    // If text contains damn..
+    if (message.toLowerCase().indexOf('damn') !== -1) {
+      
+      messages.push({
+        self: false,
+        time: Date.now(),
+        text: undefined,
+        pic: require('static/images/ice_cube.jpg')
+      });
+      return this.setState({
+        messages
+      });
+    }
     this.setState({
       messages
     }, () => {
@@ -48,7 +61,8 @@ export default class BotChatWrapper extends React.Component {
 
   render() {
     return (
-      <ChatBox 
+      <ChatBox
+        otherName={this.props.otherName}
         messages={this.state.messages}
         onMessageInput={this.handleUserInput}/>
     );

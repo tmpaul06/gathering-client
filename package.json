@@ -4,7 +4,9 @@
   "description": "Boilerplate for ReactJS project with hot code reloading",
   "scripts": {
     "start": "node server.js",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "build:pre": "rm -rf ./dist && mkdir -p ./dist",
+    "build": "npm run build:pre && webpack --config webpack-prod.config.js --progress --colors --profile"
   },
   "repository": {
     "type": "git",
@@ -48,11 +50,14 @@
     "webpack-dev-server": "^1.12.1"
   },
   "dependencies": {
-    "d3": "^4.2.1",
+    "es6-shim": "^0.35.1",
+    "es6-symbol": "^3.1.0",
+    "object-assign": "^4.1.0",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "react-input-range": "^0.9.1",
     "socket.io-client": "^1.4.8",
-    "superagent": "^2.1.0"
+    "superagent": "^2.1.0",
+    "weakmap": "0.0.6"
   }
 }

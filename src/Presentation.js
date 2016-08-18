@@ -10,6 +10,7 @@ import RectangleInterface from './components/RectangleInterface';
 import VerticalList from './components/VerticalList';
 import ChatBox from './components/ChatBox';
 import BotChatWrapper from './wrappers/BotChatWrapper';
+import objectAssign from 'object-assign';
 
 let csRoles = [ {
   label: 'Client',
@@ -35,6 +36,16 @@ let mrRoles = [ {
   assignedConnections: []
 } ];
 
+function getRoles(roleType) {
+  let roles = roleType === 'CS' ? csRoles : mrRoles;
+  // Return a clone!
+  return roles.map((role) => {
+    return objectAssign({}, role, {
+      assignedConnections: []
+    });
+  });
+}
+
 export default class Presentation extends React.Component {
   render() {
     return (
@@ -54,17 +65,27 @@ export default class Presentation extends React.Component {
           <Slide>
             <h4>REST&ne;HTTP</h4>
             <h4>Constraints on <strong>ELEMENTS</strong></h4>
-            <p>Scalability of component interactions</p>
-            <p>Generality of interfaces</p>
-            <p>Independent deployment of components</p>
-            <p>Enforce security</p>
-            <p>Encapsulate legacy systems</p>
+            <div style={{ opacity: 0.5 }}>
+              <p>Scalability of component interactions</p>
+              <p>Generality of interfaces</p>
+              <p>Independent deployment of components</p>
+              <p>Enforce security</p>
+              <p>Encapsulate legacy systems</p>
+            </div>
           </Slide>
           <Slide>
             <h3>Time travel</h3>
             <h5>The Internet</h5>
             <h5 style={{ color: 'orange' }}>World Wide Web</h5>
             <h5 className='ppt-title'>1960 - 2016</h5>
+          </Slide>
+          <Slide className='slide-container'>
+            <h3>Trivia primer</h3>
+            <h4>You will see a question on the screen</h4>
+            <h5 style={{ color: '#1EB546' }}>If you know the answer, type it in</h5>
+            <h5>If you do not know the answer, press any character on the keyboard</h5>
+            <h5>If the character is present in the answer, it will show up</h5>
+            <p>Speed matters!!!</p>
           </Slide>
           <Slide className='slide-container'>
             <TriviaWrapper
@@ -76,8 +97,8 @@ export default class Presentation extends React.Component {
             <h3>History of the Internet</h3>
             <p>ARPANET - developed during 60s - 70s, backed by Packet Switching</p>
             <p>ARPANET, academic and military networks in the 1980s</p>
-            <p>Internetworking - TCP/IP</p>
             <h4>Internet</h4>
+            <p>Internetworking - network of networks</p>
             <p>Global system of interconnected computer networks</p>
             <p>Uses Internet protocol suite (TCP/IP)</p>
           </Slide>
@@ -150,7 +171,7 @@ export default class Presentation extends React.Component {
             <h5>Server</h5>
             <p>An agent that processes request</p>
             <h5 style={{ color: '#7C52B3' }}>Why?</h5>
-            <p>Separate user interface from data storage concerns</p>
+            <p>Separation of concerns</p>
           </Slide>
           <Slide className='slide-container'>
             <h3>Stateless</h3>
@@ -160,18 +181,18 @@ export default class Presentation extends React.Component {
           <Slide className='slide-container'>
             <h4>Stateful communication</h4>
             <p>For example, human beings</p>
-            <ChatBox/>
+            <ChatBox otherName='Human'/>
           </Slide>
           <Slide className='slide-container'>
             <h4>Stateless communication</h4>
             <p>For example, bots</p>
-            <BotChatWrapper/>
+            <BotChatWrapper otherName='Twain The Pain'/>
           </Slide>
           <Slide>
-            <ClientServerWrapper roles={csRoles} serverType='stateful'/>
+            <ClientServerWrapper roles={getRoles('CS')} serverType='stateful'/>
           </Slide>
           <Slide>
-            <ClientServerWrapper roles={csRoles} serverType='stateless'/>
+            <ClientServerWrapper roles={getRoles('CS')} serverType='stateless'/>
           </Slide>
           <Slide>
             <h4>Stateless interaction</h4>
@@ -188,8 +209,10 @@ export default class Presentation extends React.Component {
             <h5 style={{ color: '#7C52B3' }}>Interface constraints</h5>
             <p>Identification of resources</p>
             <p>Manipulation of resources via representations</p>
-            <p>Self descriptive messages</p>
-            <p>Use of hypermedia as engine of application state (HATEOAS)</p>
+            <div style={{ opacity: 0.2 }}>
+              <p>Self descriptive messages</p>
+              <p>Use of hypermedia as engine of application state (HATEOAS)</p>
+            </div>
           </Slide>
           <Slide className='slide-container'>
             <h4>1. Identification of resources</h4>
@@ -211,9 +234,18 @@ export default class Presentation extends React.Component {
             </p>
             <h5>Resource Identifier</h5>
           </Slide>
-          <Slide>
+          <Slide className='slide-container'>
             <h4>1. Identification of resources</h4>
             <h5>URI - Uniform Resource Identifier</h5>
+            <p>A string of characters that identifies a resource</p>
+            <p>URL - The location, e.g address of library</p>
+            <p>URN - The name of the resource, e.g ISBN number</p>
+            <h5 style={{ color: '#1EB546', background: 'rgba(0,0,0,0.1)', padding: 10 }}>
+              scheme:[host[:port]][/]path[?query][#fragment]
+            </h5>
+            <p>e.g http://www.abc.com/day/2/news?lang=en#section2</p>
+            <span style={{ color: 'purple' }}>Access the resource located at `day/2/news`, set language to english,
+            go to section 2</span>
           </Slide>
           <Slide className='slide-container'>
             <h4>Representations</h4>
@@ -245,7 +277,7 @@ that defines the value’s structure and semantics</p>
             </div>
           </Slide>
           <Slide>
-            <RectangleRemoteManipulationWrapper roles={mrRoles}/>
+            <RectangleRemoteManipulationWrapper roles={getRoles('MR')}/>
           </Slide>
           <Slide className='slide-container'>
             <h4>2. Manipulation of resources</h4>
@@ -260,7 +292,7 @@ that defines the value’s structure and semantics</p>
           </Slide>
           <Slide className='slide-container'>
             <h4>2. Manipulation of resources</h4>
-            <p>All elements must understand the interface</p>
+            <p>All elements must understand the interface and agree to operate accordingly</p>
             <p>Implementation details are irrelevant</p>
             <h5>Uniformity of interface</h5>
             <h5>e.g HTTP GET, POST, PUT, DELETE</h5>

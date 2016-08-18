@@ -1,3 +1,5 @@
+require('es6-shim');
+require('es6-symbol/implement');
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';

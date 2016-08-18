@@ -40,13 +40,13 @@ export default class ChatBox extends React.Component {
     return (<div>
       <ol className='chatbox-list clearfix' ref='chatbox'>
         {messages.map((message, i) => {
-          return (<li className={message.self ? 'self' : 'other'}>
+          return (<li key={i} className={message.self ? 'self' : 'other'}>
             <div>
               <span className={'message ' + (message.self ? 'bg-primary' : 'bg-tertiary')}>
                 <span className='author'>
-                  {message.self ? UserStore.userName : 'Twain The Pain'}
+                  {message.self ? UserStore.userName : this.props.otherName}
                 </span>
-                {message.text}
+                {message.text ? message.text : (<img width={150} height={200} src={message.pic}/>)}
               </span>
             </div>
           </li>);

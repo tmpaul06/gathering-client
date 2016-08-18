@@ -82,6 +82,7 @@ class ClientServerWrapper extends React.Component {
         clientServerComponents.push({
           type: role.label,
           id: c.clientId,
+          class: role.class,
           name: c.user.name,
           state: this.state.messages ? this.state.messages[c.clientId] : undefined
         });
@@ -92,7 +93,7 @@ class ClientServerWrapper extends React.Component {
         <div className='cell-container'>
           {clientServerComponents.map((c) => {
             return (
-              <div key={c.id} className={'cell'}>
+              <div key={c.id} className={'cell ' + c.class}>
                 <span className='title'>{c.name}</span>
                 <pre>
                   {JSON.stringify(c.state, null, 2)}

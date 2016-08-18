@@ -113,19 +113,29 @@ export default class RectangleRemoteManipulationWrapper extends React.Component 
           }}>
             <span className='title'>MOVE</span>
           </div>
-          <span>Select direction</span>
-          <SingleChoice
-            selectedChoice={this.state.direction}
-            handleRadioSelect={this.changeMoveDirection.bind(this)}
-            choices={[ 'x', 'y' ]}
-          />
-          <InputRange
-            maxValue={450}
-            minValue={0}
-            value={this.state.move[this.state.direction]}
-            onChange={this.changeMoveDelta.bind(this)}
-            onChangeComplete={this.sendMoveInfo.bind(this)}
-          />
+          <div style={{
+            background: 'rgba(102, 102, 102, 1)'
+          }}>
+            <span>Select direction</span>
+            <SingleChoice
+              selectedChoice={this.state.direction}
+              handleRadioSelect={this.changeMoveDirection.bind(this)}
+              choices={[ 'x', 'y' ]}
+            />
+          </div>
+          <div style={{
+            height: 40,
+            padding: 20,
+            background: '#ffffff'
+          }}>
+            <InputRange
+              maxValue={450}
+              minValue={0}
+              value={this.state.move[this.state.direction]}
+              onChange={this.changeMoveDelta.bind(this)}
+              onChangeComplete={this.sendMoveInfo.bind(this)}
+            />
+          </div>
         </div>
       </div>
     );
@@ -166,6 +176,11 @@ export default class RectangleRemoteManipulationWrapper extends React.Component 
           }}>
             <span className='title'>ROTATE</span>
           </div>
+          <div style={{
+            height: 40,
+            padding: 20,
+            background: '#ffffff'
+          }}>
           <InputRange
             maxValue={180}
             minValue={-180}
@@ -173,6 +188,7 @@ export default class RectangleRemoteManipulationWrapper extends React.Component 
             onChange={this.changeRotationDelta.bind(this)}
             onChangeComplete={this.sendRotationInfo.bind(this)}
           />
+          </div>
         </div>
       </div>
     );

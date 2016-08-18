@@ -62,7 +62,7 @@ export default class Background extends React.Component {
   updateStars(canvas, w, h) {
     let ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, w, h);
-    ctx.globalAlpha = 0.5;
+    ctx.globalAlpha = 0.6;
     let stars = this.stars || [];
     let len = stars.length;
     // For each star, compute new position based on velocity
